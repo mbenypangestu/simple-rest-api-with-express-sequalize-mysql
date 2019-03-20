@@ -8,4 +8,6 @@ This is example of Restful API's implementation using expressJs with Sequelize O
        `
        $ npm install -g express-generator
        `
-   
+   `sequelize init
+    sequelize model:create --name Todo --attributes title:string,description:string
+    sequelize db:migrate'
