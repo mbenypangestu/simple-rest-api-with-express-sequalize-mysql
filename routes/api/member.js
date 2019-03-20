@@ -21,7 +21,7 @@ router.get('/', awaitErrorHandler(async(req, res, next) => {
     });
 }));
 
-router.post('/', awaitErrorHandler(async(req, res, mext) => {
+router.post('/', function(req, res, mext) {
     var {name, nrp}  = req.body;
 
     const member = model.Member.create({
@@ -34,7 +34,7 @@ router.post('/', awaitErrorHandler(async(req, res, mext) => {
         message : "Member already created !",
         data    : member,
     });
-}));
+});
 
 router.put('/:id', (req, res) => {
     const id            = req.params.id;
@@ -52,6 +52,24 @@ router.put('/:id', (req, res) => {
         error   : false,
         message : "Member already updated !",
         data    : member
+    }))
+    .catch(error =>  res.json({
+        error   : true,
+        message : error
+    }));
+});
+
+router.delete('/:id', (req, res) => {
+    const id    = req.params.id;
+
+    model.Member.destroy({
+        where : {
+            id : id
+        }
+    })
+    .then(status =>  res.json({
+        error   : false,
+        message : "Member already deleted !"
     }))
     .catch(error =>  res.json({
         error   : true,
