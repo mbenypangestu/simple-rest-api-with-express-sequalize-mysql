@@ -5,6 +5,7 @@ This is example of Restful API's implementation using expressJs with Sequelize O
 ## Setup and Installation
    
    ### Install Express Generator
-       ```bash
+       `
        $ npm install -g express-generator
-       ```
+       `
+   
