@@ -13,13 +13,50 @@ const awaitErrorHandler = middleware => {
 }
 
 router.get('/', awaitErrorHandler(async(req, res, next) => {
-        const member = await model.Member.findAll({});
+    const member = await model.Member.findAll({});
 
-        return res.json({
-            error   : false,
-            data    : member
-        });
+    return res.json({
+        error   : false,
+        data    : member
+    });
+}));
+
+router.post('/', awaitErrorHandler(async(req, res, mext) => {
+    var {name, nrp}  = req.body;
+
+    const member = model.Member.create({
+        name : name,
+        nrp : nrp
+    });
+
+    return res.status(201).json({
+        error   : false,
+        message : "Member already created !",
+        data    : member,
+    });
+}));
+
+router.put('/:id', (req, res) => {
+    const id            = req.params.id;
+    const {name, nrp}   = req.body;
+
+    model.Member.update({
+        name : name,
+        nrp  : nrp
+    }, {
+        where : {
+            id : id
+        }
     })
-);
+    .then(member =>  res.json({
+        error   : false,
+        message : "Member already updated !",
+        data    : member
+    }))
+    .catch(error =>  res.json({
+        error   : true,
+        message : error
+    }));
+});
 
 module.exports = router;
